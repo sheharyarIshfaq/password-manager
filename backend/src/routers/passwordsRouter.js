@@ -19,4 +19,11 @@ router.post(
   passwordsController.addPassword
 );
 
+router.patch(
+  "/update/:id",
+  checkAuth,
+  [check("userName").not().isEmpty(), check("password").isLength({ min: 6 })],
+  passwordsController.updatePassword
+);
+
 module.exports = router;

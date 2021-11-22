@@ -9,6 +9,7 @@ const getAllPasswords = async (req, res, next) => {
 
     const decryptedPasswords = userPasswords.map((userPassword) => {
       return {
+        id: userPassword.id,
         website: userPassword.website,
         title: userPassword.title,
         userName: userPassword.userName,
@@ -77,4 +78,56 @@ const addPassword = async (req, res, next) => {
   });
 };
 
-module.exports = { getAllPasswords, addPassword };
+const updatePassword = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res
+      .status(400)
+      .json({ error: "Invalid inputs passed, check your data" });
+  }
+
+  const { userName, password } = req.body;
+
+  let encryptedPassword;
+
+  try {
+    encryptedPassword = CryptoJS.AES.encrypt(
+      password,
+      process.env.SECRET_KEY
+    ).toString();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+
+  let existingPassword;
+
+  try {
+    existingPassword = await Password.findById(req.params.id);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+
+  existingPassword.userName = userName;
+  existingPassword.password = encryptedPassword;
+
+  try {
+    await existingPassword.save();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+
+  res.json({
+    id: existingPassword.id,
+    website: existingPassword.website,
+    title: existingPassword.title,
+    creator: existingPassword.creator,
+  });
+};
+
+module.exports = { getAllPasswords, addPassword, updatePassword };
