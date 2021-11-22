@@ -120,4 +120,16 @@ const login = async (req, res, next) => {
   });
 };
 
-module.exports = { signup, login };
+const getUser = async (req, res, next) => {
+  try {
+    userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.json(user);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+};
+
+module.exports = { signup, login, getUser };
