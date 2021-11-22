@@ -52,7 +52,19 @@ const signup = async (req, res, next) => {
       .json({ error: "Signing up failed, please try again later" });
   }
 
-  res.json({ name, email, id: createdUser.id });
+  let token;
+
+  try {
+    token = jwt.sign({ id: createdUser.id }, process.env.JWT_KEY, {
+      expiresIn: "1h",
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Signing up failed, please try again later" });
+  }
+
+  res.json({ name, email, id: createdUser.id, token: token });
 };
 
 const login = async (req, res, next) => {
@@ -88,10 +100,23 @@ const login = async (req, res, next) => {
       .json({ error: "Invalid credentials, could not log in" });
   }
 
+  let token;
+
+  try {
+    token = jwt.sign({ id: existingUser.id }, process.env.JWT_KEY, {
+      expiresIn: "1h",
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Logging in failed, please try again later" });
+  }
+
   res.json({
     name: existingUser.name,
     email: existingUser.email,
     id: existingUser.id,
+    token: token,
   });
 };
 
