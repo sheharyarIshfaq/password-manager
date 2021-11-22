@@ -1,4 +1,7 @@
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 const User = require("../models/user");
 
 const signup = async (req, res, next) => {
@@ -26,10 +29,19 @@ const signup = async (req, res, next) => {
       .json({ error: "User already exists, please login instead" });
   }
 
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Signing up failed, please try again later" });
+  }
+
   const createdUser = new User({
     name,
     email,
-    password,
+    password: hashedPassword,
   });
 
   try {
@@ -60,7 +72,15 @@ const login = async (req, res, next) => {
       .status(401)
       .json({ error: "Invalid credentials, could not log in" });
   }
-  let isValidPassword = existingUser.password === password ? true : false;
+  let isValidPassword = false;
+
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (error) {
+    return res
+      .status(401)
+      .json({ error: "Invalid credentials, could not log in" });
+  }
 
   if (!isValidPassword) {
     return res
