@@ -1,11 +1,28 @@
 const { validationResult } = require("express-validator");
+const CryptoJS = require("crypto-js");
 
 const Password = require("../models/password");
 
 const getAllPasswords = async (req, res, next) => {
   try {
-    const passwords = await Password.find({ creator: req.user.id });
-    res.json(passwords);
+    const userPasswords = await Password.find({ creator: req.user.id });
+
+    const decryptedPasswords = userPasswords.map((userPassword) => {
+      return {
+        website: userPassword.website,
+        title: userPassword.title,
+        userName: userPassword.userName,
+        creator: userPassword.creator,
+        password: CryptoJS.AES.decrypt(
+          userPassword.password,
+          process.env.SECRET_KEY
+        ).toString(CryptoJS.enc.Utf8),
+        createdAt: userPassword.createdAt,
+        updatedAt: userPassword.updatedAt,
+      };
+    });
+
+    res.json(decryptedPasswords);
   } catch (error) {
     return res
       .status(500)
@@ -23,11 +40,24 @@ const addPassword = async (req, res, next) => {
 
   const { website, title, userName, password } = req.body;
 
+  let encryptedPassword;
+
+  try {
+    encryptedPassword = CryptoJS.AES.encrypt(
+      password,
+      process.env.SECRET_KEY
+    ).toString();
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+
   const newPassword = new Password({
     website,
     title,
     userName,
-    password,
+    password: encryptedPassword,
     creator: req.user.id,
   });
 
