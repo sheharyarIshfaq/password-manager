@@ -111,6 +111,12 @@ const updatePassword = async (req, res, next) => {
       .json({ error: "Something went wrong, please try again later" });
   }
 
+  if (existingPassword.creator.toString() !== req.user.id) {
+    return res
+      .status(404)
+      .json({ error: "You are not allowed to perform this task" });
+  }
+
   existingPassword.userName = userName;
   existingPassword.password = encryptedPassword;
 
@@ -130,4 +136,40 @@ const updatePassword = async (req, res, next) => {
   });
 };
 
-module.exports = { getAllPasswords, addPassword, updatePassword };
+const deletePassword = async (req, res, next) => {
+  let existingPassword;
+  try {
+    existingPassword = await Password.findById(req.params.id);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+
+  if (!existingPassword) {
+    return res.status(404).json({ error: "Not Found!" });
+  }
+
+  if (existingPassword.creator.toString() !== req.user.id) {
+    return res
+      .status(404)
+      .json({ error: "You are not allowed to perform this task" });
+  }
+
+  try {
+    await Password.findByIdAndDelete(req.params.id);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "Something went wrong, please try again later" });
+  }
+
+  res.json({ message: "Succesfully deleted the note" });
+};
+
+module.exports = {
+  getAllPasswords,
+  addPassword,
+  updatePassword,
+  deletePassword,
+};

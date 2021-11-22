@@ -26,4 +26,6 @@ router.patch(
   passwordsController.updatePassword
 );
 
+router.delete("/delete/:id", checkAuth, passwordsController.deletePassword);
+
 module.exports = router;
