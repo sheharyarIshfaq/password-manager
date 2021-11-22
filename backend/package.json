@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon -r dotenv/config src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "mongoose": "^6.0.13"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "nodemon": "^2.0.15"
   }
 }
