@@ -14,12 +14,8 @@ const LandingPage = () => {
             saved passwords which are easily accessible
           </p>
           <div className="buttons-container">
-            <button className="btn btn-outline-light" type="submit">
-              Login
-            </button>
-            <button className="btn btn-danger mx-3" type="submit">
-              Signup
-            </button>
+            <button className="btn btn-outline-light">Login</button>
+            <button className="btn btn-danger mx-3">Signup</button>
           </div>
         </div>
         <div className="img-container">

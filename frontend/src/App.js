@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
@@ -12,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/passwords" element={<SavedPassword />} />
+        <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </Router>
   );
