@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "../images/img1.svg";
+import { Link } from "react-router-dom";
 
 import "./LandingPage.css";
 
@@ -14,8 +15,12 @@ const LandingPage = () => {
             saved passwords which are easily accessible
           </p>
           <div className="buttons-container">
-            <button className="btn btn-outline-light">Login</button>
-            <button className="btn btn-danger mx-3">Signup</button>
+            <Link className="btn btn-outline-light" to="/login">
+              Login
+            </Link>
+            <Link className="btn btn-danger mx-3" to="/signup">
+              Signup
+            </Link>
           </div>
         </div>
         <div className="img-container">

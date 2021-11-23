@@ -9,6 +9,8 @@ import {
 import Navbar from "./components/Navbar";
 import LandingPage from "./components/LandingPage";
 import SavedPassword from "./components/SavedPassword";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/passwords" element={<SavedPassword />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </Router>
