@@ -23,8 +23,9 @@ const Navbar = () => {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <NavLink
-                className="nav-link"
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
                 aria-current="page"
                 to="/"
               >
@@ -33,8 +34,9 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <NavLink
-                className="nav-link"
-                activeClassName="active"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
                 to="/passwords"
               >
                 View Saved Passwords
