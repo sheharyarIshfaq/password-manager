@@ -74,7 +74,14 @@ const addPassword = async (req, res, next) => {
     id: newPassword.id,
     website: newPassword.website,
     title: newPassword.title,
+    userName: newPassword.userName,
     creator: newPassword.creator,
+    password: CryptoJS.AES.decrypt(
+      newPassword.password,
+      process.env.SECRET_KEY
+    ).toString(CryptoJS.enc.Utf8),
+    createdAt: newPassword.createdAt,
+    updatedAt: newPassword.updatedAt,
   });
 };
 

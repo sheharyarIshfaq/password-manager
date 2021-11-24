@@ -8,6 +8,7 @@ const PasswordContainer = (props) => {
       {savedPasswords.map((password) => (
         <PasswordItem
           key={password.id}
+          id={password.id}
           website={password.website}
           title={password.title}
           userName={password.userName}
