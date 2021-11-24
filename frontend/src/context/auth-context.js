@@ -39,7 +39,9 @@ const AuthContextProvider = (props) => {
   };
 
   const signup = async (userData) => {
-    const response = await fetch(`${url}/login`, {
+    setIsLoading(true);
+    setError(undefined);
+    const response = await fetch(`${url}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +49,13 @@ const AuthContextProvider = (props) => {
       body: JSON.stringify(userData),
     });
     const responseData = await response.json();
-    console.log(responseData);
+    setIsLoading(false);
+    if (responseData.error) {
+      setError(responseData.error);
+      return;
+    }
+    setIsLoggedIn(true);
+    setToken(responseData.token);
   };
 
   const logout = () => {

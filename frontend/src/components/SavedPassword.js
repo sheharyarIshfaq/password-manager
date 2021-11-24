@@ -14,7 +14,6 @@ const SavedPassword = () => {
   const [error, setError] = useState();
 
   useEffect(() => {
-    console.log(token);
     const fetchPasswords = async () => {
       setIsLoading(true);
       const response = await fetch(url, {
