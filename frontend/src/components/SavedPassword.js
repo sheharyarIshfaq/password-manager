@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/auth-context";
 import NewPasswordModal from "./NewPasswordModal";
 import PasswordContainer from "./PasswordContainer";
 import Spinner from "./Spinner";
 
 const url = process.env.REACT_APP_BACKEND_PASSWORDS_URL;
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzc0ODg0MSwiZXhwIjoxNjM3NzUyNDQxfQ.5SLopvWgajYpv0alzZ7nbekRnNwsoHzCdwCdALf5Nys";
 
 const SavedPassword = () => {
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
   const [savedPasswords, setSavedPasswords] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   useEffect(() => {
+    console.log(token);
     const fetchPasswords = async () => {
       setIsLoading(true);
       const response = await fetch(url, {
@@ -27,7 +29,7 @@ const SavedPassword = () => {
     };
 
     fetchPasswords();
-  }, []);
+  }, [token]);
 
   const newPasswordHandler = (newPassword) => {
     setSavedPasswords((prevPasswords) => prevPasswords.concat(newPassword));

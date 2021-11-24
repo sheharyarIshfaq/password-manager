@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { AuthContext } from "../context/auth-context";
 import Spinner from "./Spinner";
 
 const url = process.env.REACT_APP_BACKEND_PASSWORDS_URL;
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzc0ODg0MSwiZXhwIjoxNjM3NzUyNDQxfQ.5SLopvWgajYpv0alzZ7nbekRnNwsoHzCdwCdALf5Nys";
 
 const NewPasswordModal = (props) => {
+  const authCtx = useContext(AuthContext);
+  const token = authCtx.token;
   const websiteRef = useRef();
   const titleRef = useRef();
   const nameRef = useRef();

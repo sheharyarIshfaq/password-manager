@@ -65,3 +65,8 @@
     font-size: 2.3rem;
   }
 }
+@media (min-width: 992px) {
+  .form-container {
+    width: 50vw;
+  }
+}

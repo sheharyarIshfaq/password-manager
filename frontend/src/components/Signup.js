@@ -3,7 +3,7 @@ import React from "react";
 const Signup = () => {
   return (
     <div
-      className="container d-flex flex-column justify-content-center align-items-center p-4"
+      className="form-container container d-flex flex-column justify-content-center p-4"
       style={{ height: "70vh" }}
     >
       <h2 className="text-center">Please signup to save your passwords</h2>
