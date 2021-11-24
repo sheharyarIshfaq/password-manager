@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { AuthContext } from "../context/auth-context";
 
 const Navbar = () => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
+
+  const logoutHandler = () => {
+    authCtx.logout();
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-danger">
       <div className="container-fluid px-3">
@@ -32,24 +40,39 @@ const Navbar = () => {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-                to="/passwords"
-              >
-                View Saved Passwords
-              </NavLink>
-            </li>
+            {isLoggedIn && (
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  to="/passwords"
+                >
+                  View Saved Passwords
+                </NavLink>
+              </li>
+            )}
           </ul>
 
-          <Link className="btn btn-outline-light mx-1" to="/login">
-            Login
-          </Link>
-          <Link className="btn btn-light mx-1" to="/signup">
-            Signup
-          </Link>
+          {!isLoggedIn && (
+            <>
+              <Link className="btn btn-outline-light mx-1" to="/login">
+                Login
+              </Link>
+              <Link className="btn btn-light mx-1" to="/signup">
+                Signup
+              </Link>
+            </>
+          )}
+          {isLoggedIn && (
+            <Link
+              className="btn btn-outline-light mx-1"
+              to="/"
+              onClick={logoutHandler}
+            >
+              Logout
+            </Link>
+          )}
         </div>
       </div>
     </nav>

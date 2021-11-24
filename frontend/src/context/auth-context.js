@@ -9,6 +9,7 @@ export const AuthContext = React.createContext({
   error: undefined,
   login: (userData) => {},
   signup: (userData) => {},
+  logout: () => {},
 });
 
 const AuthContextProvider = (props) => {
@@ -49,6 +50,11 @@ const AuthContextProvider = (props) => {
     console.log(responseData);
   };
 
+  const logout = () => {
+    setIsLoggedIn(false);
+    setToken(undefined);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -56,6 +62,7 @@ const AuthContextProvider = (props) => {
         token: token,
         login: login,
         signup: signup,
+        logout: logout,
         error: error,
         isLoading: isLoading,
       }}

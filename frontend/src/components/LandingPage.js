@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "../images/img1.svg";
 import { Link } from "react-router-dom";
 
 import "./LandingPage.css";
+import { AuthContext } from "../context/auth-context";
 
 const LandingPage = () => {
+  const authCtx = useContext(AuthContext);
+  const isLoggedIn = authCtx.isLoggedIn;
   return (
     <div className="landing-page-container">
       <div className="d-flex">
@@ -14,14 +17,16 @@ const LandingPage = () => {
             All your passwords at one place, login to any website with your
             saved passwords which are easily accessible
           </p>
-          <div className="buttons-container">
-            <Link className="btn btn-outline-light" to="/login">
-              Login
-            </Link>
-            <Link className="btn btn-danger mx-3" to="/signup">
-              Signup
-            </Link>
-          </div>
+          {!isLoggedIn && (
+            <div className="buttons-container">
+              <Link className="btn btn-outline-light" to="/login">
+                Login
+              </Link>
+              <Link className="btn btn-danger mx-3" to="/signup">
+                Signup
+              </Link>
+            </div>
+          )}
         </div>
         <div className="img-container">
           <img src={Image} alt="" className="img-fluid" />
