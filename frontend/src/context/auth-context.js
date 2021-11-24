@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const url = process.env.REACT_APP_BACKEND_USERS_URL;
 
@@ -18,6 +18,20 @@ const AuthContextProvider = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [token, setToken] = useState();
 
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
+    if (
+      storedData &&
+      storedData.token &&
+      new Date(storedData.expiresIn) > new Date()
+    ) {
+      setToken(storedData.token);
+      setIsLoggedIn(true);
+    } else {
+      localStorage.removeItem("userData");
+    }
+  }, []);
+
   const login = async (userData) => {
     setIsLoading(true);
     setError(undefined);
@@ -36,6 +50,11 @@ const AuthContextProvider = (props) => {
     }
     setIsLoggedIn(true);
     setToken(responseData.token);
+    const expirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ token: responseData.token, expiresIn: expirationDate })
+    );
   };
 
   const signup = async (userData) => {
@@ -56,11 +75,17 @@ const AuthContextProvider = (props) => {
     }
     setIsLoggedIn(true);
     setToken(responseData.token);
+    const expirationDate = new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ token: responseData.token, expiresIn: expirationDate })
+    );
   };
 
   const logout = () => {
     setIsLoggedIn(false);
     setToken(undefined);
+    localStorage.removeItem("userData");
   };
 
   return (
