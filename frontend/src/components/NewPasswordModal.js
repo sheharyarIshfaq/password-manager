@@ -3,7 +3,7 @@ import Spinner from "./Spinner";
 
 const url = process.env.REACT_APP_BACKEND_PASSWORDS_URL;
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzc0NDk3MCwiZXhwIjoxNjM3NzQ4NTcwfQ.UXOBOjUB54Xb6R6gAyprjvmmZaKZ5Z-Uxq-Cse06DsY";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzc0ODg0MSwiZXhwIjoxNjM3NzUyNDQxfQ.5SLopvWgajYpv0alzZ7nbekRnNwsoHzCdwCdALf5Nys";
 
 const NewPasswordModal = (props) => {
   const websiteRef = useRef();

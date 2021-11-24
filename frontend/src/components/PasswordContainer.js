@@ -7,6 +7,7 @@ const PasswordContainer = (props) => {
     <div className="row gap-4 p-4 p-lg-2 py-lg-4 align-content-center justify-content-center">
       {savedPasswords.map((password) => (
         <PasswordItem
+          onDelete={props.onDelete}
           key={password.id}
           id={password.id}
           website={password.website}

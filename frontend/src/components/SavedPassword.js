@@ -5,7 +5,7 @@ import Spinner from "./Spinner";
 
 const url = process.env.REACT_APP_BACKEND_PASSWORDS_URL;
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzc0NDk3MCwiZXhwIjoxNjM3NzQ4NTcwfQ.UXOBOjUB54Xb6R6gAyprjvmmZaKZ5Z-Uxq-Cse06DsY";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzc0ODg0MSwiZXhwIjoxNjM3NzUyNDQxfQ.5SLopvWgajYpv0alzZ7nbekRnNwsoHzCdwCdALf5Nys";
 
 const SavedPassword = () => {
   const [savedPasswords, setSavedPasswords] = useState([]);
@@ -31,6 +31,23 @@ const SavedPassword = () => {
 
   const newPasswordHandler = (newPassword) => {
     setSavedPasswords((prevPasswords) => prevPasswords.concat(newPassword));
+  };
+
+  const passwordDeleteHandler = async (id) => {
+    setIsLoading(true);
+    const response = await fetch(`${url}/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const responseData = await response.json();
+    setIsLoading(false);
+    if (!responseData.error) {
+      setSavedPasswords((prevPasswords) =>
+        prevPasswords.filter((password) => password.id !== id)
+      );
+    }
   };
 
   return (
@@ -77,8 +94,11 @@ const SavedPassword = () => {
             <h1>{error}</h1>
           </div>
         )}
-        {savedPasswords && savedPasswords.length > 0 && (
-          <PasswordContainer savedPasswords={savedPasswords} />
+        {savedPasswords && savedPasswords.length > 0 && !isLoading && (
+          <PasswordContainer
+            onDelete={passwordDeleteHandler}
+            savedPasswords={savedPasswords}
+          />
         )}
       </div>
     </div>

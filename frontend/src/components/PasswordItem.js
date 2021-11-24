@@ -27,8 +27,8 @@ const PasswordItem = (props) => {
     }, 1000);
   };
 
-  const passwordDeleteHandler = () => {
-    console.log(props.id);
+  const deleteHandler = () => {
+    props.onDelete(props.id);
   };
 
   return (
@@ -94,11 +94,7 @@ const PasswordItem = (props) => {
           </span>
         </div>
         <div className="buttons-container">
-          <button className="btn btn-sm btn-danger">Update</button>
-          <button
-            className="btn btn-sm btn-danger mx-2"
-            onClick={passwordDeleteHandler}
-          >
+          <button className="btn btn-sm btn-danger" onClick={deleteHandler}>
             Delete
           </button>
         </div>
