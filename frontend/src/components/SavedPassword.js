@@ -3,7 +3,7 @@ import PasswordContainer from "./PasswordContainer";
 
 const url = process.env.REACT_APP_BACKEND_PASSWORDS_URL;
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzcyMzc3NywiZXhwIjoxNjM3NzI3Mzc3fQ.r-z1Q7W2DXkEyzdQFngC-743EdeD9Zjk1Nun17-L09Q";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOWI0NTUwNzQxNmE2YzhhODBhYjFhNiIsImlhdCI6MTYzNzcyOTA1MCwiZXhwIjoxNjM3NzMyNjUwfQ.-mSQllHXzpZfV6ZpLibBEFBmq_U9pQ0EYPsx6qrqiyY";
 
 const SavedPassword = () => {
   const [savedPasswords, setSavedPasswords] = useState([]);

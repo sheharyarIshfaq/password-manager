@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
 const PasswordItem = (props) => {
+  const userNameRef = useRef();
+  const passwordRef = useRef();
+  const [showPassword, setShowPassword] = useState(false);
+  const [copyingName, setCopyingName] = useState(false);
+  const [copyingPassword, setCopyingPassword] = useState(false);
+
+  const showPasswordHandler = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
+  const copyUserNameHandler = () => {
+    navigator.clipboard.writeText(userNameRef.current.value);
+    setCopyingName(true);
+    setTimeout(() => {
+      setCopyingName(false);
+    }, 1000);
+  };
+
+  const copyPasswordHandler = () => {
+    navigator.clipboard.writeText(passwordRef.current.value);
+    setCopyingPassword(true);
+    setTimeout(() => {
+      setCopyingPassword(false);
+    }, 1000);
+  };
+
   return (
     <div className="card col-lg-auto">
       <div className="card-body">
@@ -16,29 +42,51 @@ const PasswordItem = (props) => {
         <div className="input-group input-group-sm my-3">
           <span className="input-group-text">User Name</span>
           <input
+            ref={userNameRef}
             type="text"
             aria-label="First name"
             className="form-control"
-            value={props.userName}
+            value={copyingName ? "Copied to Clipboard" : props.userName}
             readOnly
           />
           <span className="input-group-text">
-            <i className="far fa-copy"></i>
+            <i
+              className="far fa-copy"
+              style={{ cursor: "pointer" }}
+              onClick={copyUserNameHandler}
+            ></i>
           </span>
         </div>
         <div className="input-group input-group-sm my-3">
           <span className="input-group-text">Password</span>
           <input
-            type="text"
+            ref={passwordRef}
+            type={!showPassword && !copyingPassword ? "password" : "text"}
             aria-label="First name"
             className="form-control"
-            value={props.password}
+            value={copyingPassword ? "Copied to Clipboard" : props.password}
             readOnly
           />
           <span className="input-group-text">
-            <i className="fas fa-eye-slash me-2"></i>
-            <i className="fas fa-eye me-2"></i>
-            <i className="far fa-copy"></i>
+            {showPassword && (
+              <i
+                className="fas fa-eye-slash me-2"
+                style={{ cursor: "pointer" }}
+                onClick={showPasswordHandler}
+              ></i>
+            )}
+            {!showPassword && (
+              <i
+                className="fas fa-eye me-2"
+                style={{ cursor: "pointer" }}
+                onClick={showPasswordHandler}
+              ></i>
+            )}
+            <i
+              className="far fa-copy"
+              style={{ cursor: "pointer" }}
+              onClick={copyPasswordHandler}
+            ></i>
           </span>
         </div>
         <div className="buttons-container">
