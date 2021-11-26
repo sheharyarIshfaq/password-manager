@@ -112,13 +112,15 @@ Images of the project
 
 ---
 
+### Saved Passwords Page
+
 ![Saved Passwords Page](./readme-images/saved-passwords.png)
 
 ---
 
 <!-- CONTACT -->
 
-## Contact
+## Links
 
 Sheharyar Ishfaq - [Facebook](https://web.facebook.com/sheharyarishfaq1) - [Linkedin](https://www.linkedin.com/in/sheharyar-ishfaq/)
 
