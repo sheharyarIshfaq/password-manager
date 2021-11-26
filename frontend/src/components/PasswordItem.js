@@ -30,6 +30,13 @@ const PasswordItem = (props) => {
   const deleteHandler = () => {
     props.onDelete(props.id);
   };
+  const updateHandler = () => {
+    props.onUpdate(
+      props.id,
+      userNameRef.current.value,
+      passwordRef.current.value
+    );
+  };
 
   return (
     <div className="card col-lg-auto">
@@ -96,6 +103,12 @@ const PasswordItem = (props) => {
         <div className="buttons-container">
           <button className="btn btn-sm btn-danger" onClick={deleteHandler}>
             Delete
+          </button>
+          <button
+            className="btn btn-sm btn-danger mx-2"
+            onClick={updateHandler}
+          >
+            Update
           </button>
         </div>
       </div>

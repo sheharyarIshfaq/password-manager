@@ -139,7 +139,14 @@ const updatePassword = async (req, res, next) => {
     id: existingPassword.id,
     website: existingPassword.website,
     title: existingPassword.title,
+    userName: existingPassword.userName,
     creator: existingPassword.creator,
+    password: CryptoJS.AES.decrypt(
+      existingPassword.password,
+      process.env.SECRET_KEY
+    ).toString(CryptoJS.enc.Utf8),
+    createdAt: existingPassword.createdAt,
+    updatedAt: existingPassword.updatedAt,
   });
 };
 

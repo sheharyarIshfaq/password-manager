@@ -8,6 +8,7 @@ const PasswordContainer = (props) => {
       {savedPasswords.map((password) => (
         <PasswordItem
           onDelete={props.onDelete}
+          onUpdate={props.onUpdate}
           key={password.id}
           id={password.id}
           website={password.website}
